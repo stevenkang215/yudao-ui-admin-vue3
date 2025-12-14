@@ -15,7 +15,7 @@
           <LoginFormTitle class="w-full" />
         </el-form-item>
       </el-col>
-      <el-col :span="24" class="px-10px">
+      <!-- <el-col :span="24" class="px-10px">
         <el-form-item v-if="loginData.tenantEnable === 'true'" prop="tenantName">
           <el-input
             v-model="loginData.loginForm.tenantName"
@@ -25,7 +25,7 @@
             type="primary"
           />
         </el-form-item>
-      </el-col>
+      </el-col> -->
       <el-col :span="24" class="px-10px">
         <el-form-item prop="username">
           <el-input
@@ -55,7 +55,7 @@
                 {{ t('login.remember') }}
               </el-checkbox>
             </el-col>
-            <el-col :offset="6" :span="12">
+            <!-- <el-col :offset="6" :span="12">
               <el-link
                 class="float-right"
                 type="primary"
@@ -63,7 +63,7 @@
               >
                 {{ t('login.forgetPassword') }}
               </el-link>
-            </el-col>
+            </el-col> -->
           </el-row>
         </el-form-item>
       </el-col>
@@ -86,7 +86,7 @@
         mode="pop"
         @success="handleLogin"
       />
-      <el-col :span="24" class="px-10px">
+      <!-- <el-col :span="24" class="px-10px">
         <el-form-item>
           <el-row :gutter="5" justify="space-between" style="width: 100%">
             <el-col :span="8">
@@ -112,8 +112,8 @@
             </el-col>
           </el-row>
         </el-form-item>
-      </el-col>
-      <el-divider content-position="center">{{ t('login.otherLogin') }}</el-divider>
+      </el-col> -->
+      <!-- <el-divider content-position="center">{{ t('login.otherLogin') }}</el-divider>
       <el-col :span="24" class="px-10px">
         <el-form-item>
           <div class="w-full flex justify-between">
@@ -128,8 +128,8 @@
             />
           </div>
         </el-form-item>
-      </el-col>
-      <el-divider content-position="center">萌新必读</el-divider>
+      </el-col> -->
+      <!-- <el-divider content-position="center">萌新必读</el-divider>
       <el-col :span="24" class="px-10px">
         <el-form-item>
           <div class="w-full flex justify-between">
@@ -143,7 +143,7 @@
             </el-link>
           </div>
         </el-form-item>
-      </el-col>
+      </el-col> -->
     </el-row>
   </el-form>
 </template>
