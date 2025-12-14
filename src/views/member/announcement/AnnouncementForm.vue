@@ -55,6 +55,7 @@
 <script setup lang="ts">
 import * as AnnouncementApi from '@/api/member/announcement'
 import { UploadImg } from '@/components/UploadFile'
+import dayjs from 'dayjs'
 
 const { t } = useI18n() // 国际化
 const message = useMessage() // 消息弹窗
@@ -93,7 +94,14 @@ const open = async (type: string, id?: number) => {
   if (id) {
     formLoading.value = true
     try {
-      formData.value = await AnnouncementApi.getAnnouncement(id)
+      const data = await AnnouncementApi.getAnnouncement(id)
+      formData.value = {
+        ...data,
+        // 将时间戳转换为 YYYY-MM-DD HH:mm:ss 格式用于回显
+        activityTime: data.activityTime
+          ? dayjs(data.activityTime).format('YYYY-MM-DD HH:mm:ss')
+          : undefined
+      }
     } finally {
       formLoading.value = false
     }
@@ -111,7 +119,13 @@ const submitForm = async () => {
   // 提交请求
   formLoading.value = true
   try {
-    const data = formData.value as unknown as AnnouncementApi.AnnouncementVO
+    const data = {
+      ...formData.value,
+      // 将 YYYY-MM-DD HH:mm:ss 格式转换为时间戳
+      activityTime: formData.value.activityTime
+        ? dayjs(formData.value.activityTime).valueOf()
+        : undefined
+    } as unknown as AnnouncementApi.AnnouncementVO
     if (formType.value === 'create') {
       await AnnouncementApi.createAnnouncement(data)
       message.success(t('common.createSuccess'))

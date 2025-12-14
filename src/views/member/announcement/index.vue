@@ -113,7 +113,13 @@
           <span v-else>-</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="活动时间" prop="activityTime" width="180px" />
+      <el-table-column
+        align="center"
+        label="活动时间"
+        prop="activityTime"
+        width="180px"
+        :formatter="activityTimeFormatter"
+      />
       <el-table-column align="center" label="活动地点" prop="activityPlace" width="150px" />
       <el-table-column align="center" label="类型" prop="type" width="100px">
         <template #default="scope">
@@ -171,6 +177,7 @@
 import { dateFormatter } from '@/utils/formatTime'
 import * as AnnouncementApi from '@/api/member/announcement'
 import AnnouncementForm from './AnnouncementForm.vue'
+import dayjs from 'dayjs'
 
 defineOptions({ name: 'MemberAnnouncement' })
 
@@ -233,6 +240,17 @@ const handleDelete = async (id: number) => {
     // 刷新列表
     await getList()
   } catch {}
+}
+
+/** 活动时间格式化 */
+const activityTimeFormatter = (_row: any, _column: any, cellValue: any): string => {
+  if (!cellValue) return ''
+  // 如果是时间戳，转换为 YYYY-MM-DD HH:mm:ss 格式
+  if (typeof cellValue === 'number') {
+    return dayjs(cellValue).format('YYYY-MM-DD HH:mm:ss')
+  }
+  // 如果已经是字符串格式，直接返回
+  return cellValue
 }
 
 /** 初始化 **/
