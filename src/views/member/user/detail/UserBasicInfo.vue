@@ -63,6 +63,102 @@
             </template>
             {{ user.loginDate ? formatDate(user.loginDate as any) : '空' }}
           </el-descriptions-item>
+          <el-descriptions-item>
+            <template #label>
+              <descriptions-item-label icon="ep:message" label="邮箱" />
+            </template>
+            {{ user.email || '空' }}
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template #label>
+              <descriptions-item-label icon="ep:calendar" label="入学年份" />
+            </template>
+            {{ user.enrollmentYear || '空' }}
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template #label>
+              <descriptions-item-label icon="ep:reading" label="入学学期" />
+            </template>
+            {{ user.enrollmentSemester ? `第${user.enrollmentSemester}学期` : '空' }}
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template #label>
+              <descriptions-item-label icon="ep:briefcase" label="所属行业" />
+            </template>
+            {{ user.industry || '空' }}
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template #label>
+              <descriptions-item-label icon="ep:office-building" label="在职公司" />
+            </template>
+            {{ user.company || '空' }}
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template #label>
+              <descriptions-item-label icon="ep:suitcase" label="职位" />
+            </template>
+            {{ user.position || '空' }}
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template #label>
+              <descriptions-item-label icon="ep:user" label="MBTI" />
+            </template>
+            {{ user.mbti || '空' }}
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template #label>
+              <descriptions-item-label icon="ep:star" label="兴趣爱好" />
+            </template>
+            {{ user.hobbies || '空' }}
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template #label>
+              <descriptions-item-label icon="ep:chat-line-square" label="微信号" />
+            </template>
+            {{ user.wechatNumber || '空' }}
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template #label>
+              <descriptions-item-label icon="ep:location" label="居住城市" />
+            </template>
+            {{ user.city || '空' }}
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template #label>
+              <descriptions-item-label icon="ep:school" label="学士毕业院校" />
+            </template>
+            {{ user.university || '空' }}
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template #label>
+              <descriptions-item-label icon="ep:school" label="硕士毕业院校" />
+            </template>
+            {{ user.masterUniversity || '空' }}
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template #label>
+              <descriptions-item-label icon="ep:school" label="博士毕业院校" />
+            </template>
+            {{ user.doctorUniversity || '空' }}
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template #label>
+              <descriptions-item-label icon="ep:office-building" label="曾就职公司1" />
+            </template>
+            {{ user.company1 || '空' }}
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template #label>
+              <descriptions-item-label icon="ep:office-building" label="曾就职公司2" />
+            </template>
+            {{ user.company2 || '空' }}
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template #label>
+              <descriptions-item-label icon="ep:office-building" label="曾就职公司3" />
+            </template>
+            {{ user.company3 || '空' }}
+          </el-descriptions-item>
         </el-descriptions>
       </el-col>
     </el-row>
@@ -122,6 +218,102 @@
             <descriptions-item-label icon="ep:calendar" label="最后登录时间" />
           </template>
           {{ user.loginDate ? formatDate(user.loginDate as any) : '空' }}
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template #label>
+            <descriptions-item-label icon="ep:message" label="邮箱" />
+          </template>
+          {{ user.email || '空' }}
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template #label>
+            <descriptions-item-label icon="ep:calendar" label="入学年份" />
+          </template>
+          {{ user.enrollmentYear || '空' }}
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template #label>
+            <descriptions-item-label icon="ep:reading" label="入学学期" />
+          </template>
+          {{ user.enrollmentSemester ? `第${user.enrollmentSemester}学期` : '空' }}
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template #label>
+            <descriptions-item-label icon="ep:briefcase" label="所属行业" />
+          </template>
+          {{ user.industry || '空' }}
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template #label>
+            <descriptions-item-label icon="ep:office-building" label="在职公司" />
+          </template>
+          {{ user.company || '空' }}
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template #label>
+            <descriptions-item-label icon="ep:suitcase" label="职位" />
+          </template>
+          {{ user.position || '空' }}
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template #label>
+            <descriptions-item-label icon="ep:user" label="MBTI" />
+          </template>
+          {{ user.mbti || '空' }}
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template #label>
+            <descriptions-item-label icon="ep:star" label="兴趣爱好" />
+          </template>
+          {{ user.hobbies || '空' }}
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template #label>
+            <descriptions-item-label icon="ep:chat-line-square" label="微信号" />
+          </template>
+          {{ user.wechatNumber || '空' }}
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template #label>
+            <descriptions-item-label icon="ep:location" label="居住城市" />
+          </template>
+          {{ user.city || '空' }}
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template #label>
+            <descriptions-item-label icon="ep:school" label="学士毕业院校" />
+          </template>
+          {{ user.university || '空' }}
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template #label>
+            <descriptions-item-label icon="ep:school" label="硕士毕业院校" />
+          </template>
+          {{ user.masterUniversity || '空' }}
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template #label>
+            <descriptions-item-label icon="ep:school" label="博士毕业院校" />
+          </template>
+          {{ user.doctorUniversity || '空' }}
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template #label>
+            <descriptions-item-label icon="ep:office-building" label="曾就职公司1" />
+          </template>
+          {{ user.company1 || '空' }}
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template #label>
+            <descriptions-item-label icon="ep:office-building" label="曾就职公司2" />
+          </template>
+          {{ user.company2 || '空' }}
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template #label>
+            <descriptions-item-label icon="ep:office-building" label="曾就职公司3" />
+          </template>
+          {{ user.company3 || '空' }}
         </el-descriptions-item>
       </el-descriptions>
     </template>

@@ -28,6 +28,22 @@ export default defineComponent({
     }
   },
   setup(props) {
+    // 判断颜色是亮色还是暗色，返回合适的文字颜色
+    const getTextColor = (bgColor: string): string => {
+      if (!bgColor || !isHexColor(bgColor)) {
+        return ''
+      }
+      // 移除 # 号
+      const color = bgColor.replace('#', '')
+      // 将颜色转换为 RGB
+      const r = parseInt(color.substr(0, 2), 16)
+      const g = parseInt(color.substr(2, 2), 16)
+      const b = parseInt(color.substr(4, 2), 16)
+      // 计算亮度 (使用 YIQ 公式)
+      const brightness = (r * 299 + g * 587 + b * 114) / 1000
+      // 如果亮度大于 128，使用深色文字；否则使用浅色文字
+      return brightness > 128 ? '#333' : '#fff'
+    }
     const valueArr: any = computed(() => {
       // 1. 是 Number 类型和 Boolean 类型的情况
       if (isNumber(props.value) || isBoolean(props.value)) {
@@ -68,10 +84,12 @@ export default defineComponent({
               if (dict.colorType + '' === 'primary' || dict.colorType + '' === 'default') {
                 dict.colorType = ''
               }
+              // 根据背景色自动选择合适的文字颜色
+              const textColor =
+                dict?.cssClass && isHexColor(dict?.cssClass) ? getTextColor(dict.cssClass) : ''
               return (
-                // 添加标签的文字颜色为白色，解决自定义背景颜色时标签文字看不清的问题
                 <ElTag
-                  style={dict?.cssClass ? 'color: #fff' : ''}
+                  style={textColor ? `color: ${textColor}` : ''}
                   type={dict?.colorType || null}
                   color={dict?.cssClass && isHexColor(dict?.cssClass) ? dict?.cssClass : ''}
                   disableTransitions={true}

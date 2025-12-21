@@ -21,14 +21,14 @@
           </el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="用户昵称" prop="nickname">
+      <!-- <el-form-item label="用户昵称" prop="nickname">
         <el-input v-model="formData.nickname" placeholder="请输入用户昵称" />
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="头像" prop="avatar">
         <UploadImg v-model="formData.avatar" :limit="1" :is-show-tip="false" />
       </el-form-item>
-      <el-form-item label="真实名字" prop="name">
-        <el-input v-model="formData.name" placeholder="请输入真实名字" />
+      <el-form-item label="姓名" prop="name">
+        <el-input v-model="formData.name" placeholder="请输入姓名" />
       </el-form-item>
       <el-form-item label="用户性别" prop="sex">
         <el-radio-group v-model="formData.sex">
@@ -49,15 +49,78 @@
           placeholder="选择出生日期"
         />
       </el-form-item>
-      <el-form-item label="所在地" prop="areaId">
+      <el-form-item label="邮箱" prop="email">
+        <el-input v-model="formData.email" placeholder="请输入邮箱" />
+      </el-form-item>
+      <el-form-item label="入学年份" prop="enrollmentYear">
+        <el-select v-model="formData.enrollmentYear" placeholder="请选择入学年份" clearable>
+          <el-option
+            v-for="year in enrollmentYearOptions"
+            :key="year"
+            :label="year"
+            :value="year"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item label="入学学期" prop="enrollmentSemester">
+        <el-select v-model="formData.enrollmentSemester" placeholder="请选择入学学期" clearable>
+          <el-option
+            v-for="semester in enrollmentSemesterOptions"
+            :key="semester.id"
+            :label="semester.label"
+            :value="semester.id"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item label="所属行业" prop="industry">
+        <el-input v-model="formData.industry" placeholder="请输入所属行业" />
+      </el-form-item>
+      <el-form-item label="在职公司" prop="company">
+        <el-input v-model="formData.company" placeholder="请输入目前所在公司" />
+      </el-form-item>
+      <el-form-item label="职位" prop="position">
+        <el-input v-model="formData.position" placeholder="请输入职位" />
+      </el-form-item>
+      <el-form-item label="MBTI" prop="mbti">
+        <el-input v-model="formData.mbti" placeholder="请输入MBTI" />
+      </el-form-item>
+      <el-form-item label="兴趣爱好" prop="hobbies">
+        <el-input v-model="formData.hobbies" placeholder="请输入兴趣爱好" />
+      </el-form-item>
+      <el-form-item label="微信号" prop="wechatNumber">
+        <el-input v-model="formData.wechatNumber" placeholder="请输入微信号" />
+      </el-form-item>
+      <el-form-item label="居住城市" prop="city">
+        <el-input v-model="formData.city" placeholder="请输入目前所在城市" />
+      </el-form-item>
+      <el-form-item label="学士毕业院校" prop="university">
+        <el-input v-model="formData.university" placeholder="请输入毕业院校" />
+      </el-form-item>
+      <el-form-item label="硕士毕业院校" prop="masterUniversity">
+        <el-input v-model="formData.masterUniversity" placeholder="请输入毕业院校" />
+      </el-form-item>
+      <el-form-item label="博士毕业院校" prop="doctorUniversity">
+        <el-input v-model="formData.doctorUniversity" placeholder="请输入毕业院校" />
+      </el-form-item>
+
+      <el-form-item label="曾就职公司" prop="company1">
+        <el-input v-model="formData.company1" placeholder="请输入曾就职公司" />
+      </el-form-item>
+      <el-form-item label="曾就职公司" prop="company2">
+        <el-input v-model="formData.company2" placeholder="请输入曾就职公司" />
+      </el-form-item>
+      <el-form-item label="曾就职公司" prop="company3">
+        <el-input v-model="formData.company3" placeholder="请输入曾就职公司" />
+      </el-form-item>
+      <!-- <el-form-item label="所在地" prop="areaId">
         <el-tree-select
           v-model="formData.areaId"
           :data="areaList"
           :props="defaultProps"
           :render-after-expand="true"
         />
-      </el-form-item>
-      <el-form-item label="用户标签" prop="tagIds">
+      </el-form-item> -->
+      <!-- <el-form-item label="用户标签" prop="tagIds">
         <MemberTagSelect v-model="formData.tagIds" show-add />
       </el-form-item>
       <el-form-item label="用户分组" prop="groupId">
@@ -65,7 +128,7 @@
       </el-form-item>
       <el-form-item label="会员备注" prop="mark">
         <el-input type="textarea" v-model="formData.mark" placeholder="请输入会员备注" />
-      </el-form-item>
+      </el-form-item> -->
     </el-form>
     <template #footer>
       <el-button @click="submitForm" type="primary" :disabled="formLoading">确 定</el-button>
@@ -76,10 +139,11 @@
 <script setup lang="ts">
 import { DICT_TYPE, getIntDictOptions } from '@/utils/dict'
 import * as UserApi from '@/api/member/user'
-import * as AreaApi from '@/api/system/area'
-import { defaultProps } from '@/utils/tree'
-import MemberTagSelect from '@/views/member/tag/components/MemberTagSelect.vue'
-import MemberGroupSelect from '@/views/member/group/components/MemberGroupSelect.vue'
+import dayjs from 'dayjs'
+// import * as AreaApi from '@/api/system/area'
+// import { defaultProps } from '@/utils/tree'
+// import MemberTagSelect from '@/views/member/tag/components/MemberTagSelect.vue'
+// import MemberGroupSelect from '@/views/member/group/components/MemberGroupSelect.vue'
 
 const { t } = useI18n() // 国际化
 const message = useMessage() // 消息弹窗
@@ -101,14 +165,54 @@ const formData = ref({
   birthday: undefined,
   mark: undefined,
   tagIds: [],
-  groupId: undefined
+  groupId: undefined,
+  email: undefined,
+  enrollmentYear: undefined,
+  enrollmentSemester: undefined,
+  industry: undefined,
+  company: undefined,
+  position: undefined,
+  mbti: undefined,
+  hobbies: undefined,
+  wechatNumber: undefined,
+  city: undefined,
+  university: undefined,
+  masterUniversity: undefined,
+  doctorUniversity: undefined,
+  company1: undefined,
+  company2: undefined,
+  company3: undefined
 })
 const formRules = reactive({
   mobile: [{ required: true, message: '手机号不能为空', trigger: 'blur' }],
   status: [{ required: true, message: '状态不能为空', trigger: 'blur' }]
 })
 const formRef = ref() // 表单 Ref
-const areaList = ref([]) // 地区列表
+// const areaList = ref([]) // 地区列表
+
+// 生成入学年份选项（从1970年到当前年份）
+const enrollmentYearOptions = computed(() => {
+  const currentYear = dayjs().year()
+  const years: number[] = []
+  for (let year = 1970; year <= currentYear; year++) {
+    years.push(year)
+  }
+  return years.reverse() // 倒序排列，最新年份在前
+})
+
+// 生成入学学期选项
+const enrollmentSemesterOptions = computed(() => {
+  const currentYear = dayjs().year()
+  const baseSemesters = 2 // 内置2个学期
+  const startYear = 2000 // 从2000年开始每年增加一学期
+  const additionalSemesters = currentYear >= startYear ? currentYear - startYear + 1 : 0
+  const totalSemesters = baseSemesters + additionalSemesters
+  const semesters = Array.from({ length: totalSemesters }, (_, i) => ({
+    id: i + 1,
+    label: `第${i + 1}学期`
+  }))
+  return semesters
+})
 
 /** 打开弹窗 */
 const open = async (type: string, id?: number) => {
@@ -126,7 +230,7 @@ const open = async (type: string, id?: number) => {
     }
   }
   // 获得地区列表
-  areaList.value = await AreaApi.getAreaTree()
+  // areaList.value = await AreaApi.getAreaTree()
 }
 defineExpose({ open }) // 提供 open 方法，用于打开弹窗
 
@@ -172,7 +276,23 @@ const resetForm = () => {
     birthday: undefined,
     mark: undefined,
     tagIds: [],
-    groupId: undefined
+    groupId: undefined,
+    email: undefined,
+    enrollmentYear: undefined,
+    enrollmentSemester: undefined,
+    industry: undefined,
+    company: undefined,
+    position: undefined,
+    mbti: undefined,
+    hobbies: undefined,
+    wechatNumber: undefined,
+    city: undefined,
+    university: undefined,
+    masterUniversity: undefined,
+    doctorUniversity: undefined,
+    company1: undefined,
+    company2: undefined,
+    company3: undefined
   }
   formRef.value?.resetFields()
 }

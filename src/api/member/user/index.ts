@@ -20,6 +20,22 @@ export interface UserVO {
   point: number | undefined | null
   totalPoint: number | undefined | null
   experience: number | null | undefined
+  email: string | undefined
+  enrollmentYear: number | undefined
+  enrollmentSemester: number | undefined
+  industry: string | undefined
+  company: string | undefined
+  position: string | undefined
+  mbti: string | undefined
+  hobbies: string | undefined
+  wechatNumber: string | undefined
+  city: string | undefined
+  university: string | undefined
+  masterUniversity: string | undefined
+  doctorUniversity: string | undefined
+  company1: string | undefined
+  company2: string | undefined
+  company3: string | undefined
 }
 
 // 查询会员用户列表
