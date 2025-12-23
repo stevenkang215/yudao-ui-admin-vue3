@@ -89,19 +89,27 @@
           <img :src="scope.row.avatar" style="width: 40px; height: 40px; border-radius: 50%" />
         </template>
       </el-table-column>
-      <el-table-column align="center" label="姓名" prop="name" width="80px" />
+      <el-table-column align="center" label="姓名" prop="name" min-width="80px" />
       <el-table-column align="center" label="性别" width="80px">
         <template #default="scope">
           <dict-tag :type="DICT_TYPE.SYSTEM_USER_SEX" :value="scope.row.sex" />
         </template>
       </el-table-column>
-      <el-table-column align="center" label="手机号" prop="mobile" width="120px" />
-      <el-table-column align="center" label="邮箱" prop="email" width="120px" />
-      <el-table-column align="center" label="入学年份" prop="enrollmentYear" width="120px" />
-      <el-table-column align="center" label="入学学期" prop="enrollmentSemester" width="120px" />
-      <el-table-column align="center" label="行业" prop="industry" width="120px" />
-      <el-table-column align="center" label="在职公司" prop="company" width="120px" />
-      <el-table-column align="center" label="职位" prop="position" width="120px" />
+      <el-table-column align="center" label="手机号" prop="mobile" min-width="120px" />
+      <el-table-column align="center" label="邮箱" prop="email" min-width="120px" />
+      <el-table-column align="center" label="入学年份" prop="enrollmentYear" min-width="120px">
+        <template #default="scope">
+          {{ scope.row.enrollmentYear ? scope.row.enrollmentYear + '年' : '' }}
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="入学期数" prop="enrollmentSemester" min-width="120px">
+        <template #default="scope">
+          {{ scope.row.enrollmentSemester ? scope.row.enrollmentSemester + '期' : '' }}
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="行业" prop="industry" min-width="120px" />
+      <el-table-column align="center" label="在职公司" prop="company" min-width="120px" />
+      <el-table-column align="center" label="职位" prop="position" min-width="120px" />
       <!-- <el-table-column align="center" label="等级" prop="levelName" width="100px" />
       <el-table-column align="center" label="分组" prop="groupName" width="100px" /> -->
       <!-- <el-table-column

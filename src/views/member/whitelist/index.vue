@@ -18,23 +18,29 @@
         />
       </el-form-item>
       <el-form-item label="入学年份" prop="enrollmentYear">
-        <el-input-number
+        <el-select
           v-model="queryParams.enrollmentYear"
           class="!w-240px"
           clearable
-          placeholder="请输入入学年份"
-          :min="2000"
-          :max="2100"
-        />
+          placeholder="请选择入学年份"
+        >
+          <el-option
+            v-for="year in enrollmentYearOptions"
+            :key="year"
+            :label="year + '年'"
+            :value="year"
+          />
+        </el-select>
       </el-form-item>
-      <el-form-item label="入学学期数" prop="semester">
-        <el-input-number
+      <el-form-item label="入学期数" prop="semester">
+        <el-select
           v-model="queryParams.semester"
           class="!w-240px"
           clearable
-          placeholder="请输入入学学期数"
-          :min="1"
-        />
+          placeholder="请选择入学期数"
+        >
+          <el-option v-for="sem in semesterOptions" :key="sem" :label="`第${sem}期`" :value="sem" />
+        </el-select>
       </el-form-item>
       <el-form-item label="创建时间" prop="createTime">
         <el-date-picker
@@ -56,23 +62,33 @@
           <Icon class="mr-5px" icon="ep:refresh" />
           重置
         </el-button>
+        <el-button type="primary" @click="openForm('create')">
+          <Icon class="mr-5px" icon="ep:plus" />
+          新增
+        </el-button>
+        <el-button type="warning" plain @click="handleImport">
+          <Icon class="mr-5px" icon="ep:upload" />
+          导入
+        </el-button>
       </el-form-item>
     </el-form>
   </ContentWrap>
 
   <!-- 列表 -->
   <ContentWrap>
-    <div class="mb-10px">
-      <el-button type="primary" @click="openForm('create')">
-        <Icon class="mr-5px" icon="ep:plus" />
-        新增白名单人员
-      </el-button>
-    </div>
     <el-table v-loading="loading" :data="list" :show-overflow-tooltip="true" :stripe="true">
       <el-table-column align="center" label="用户ID" prop="id" width="120px" />
       <el-table-column align="center" label="姓名" prop="userName" width="160px" />
-      <el-table-column align="center" label="入学年份" prop="enrollmentYear" width="120px" />
-      <el-table-column align="center" label="入学学期数" prop="semester" width="120px" />
+      <el-table-column align="center" label="入学年份" prop="enrollmentYear" width="120px">
+        <template #default="scope">
+          {{ scope.row.enrollmentYear ? scope.row.enrollmentYear + '年' : '' }}
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="入学期数" prop="semester" width="120px">
+        <template #default="scope">
+          {{ scope.row.semester ? scope.row.semester + '期' : '' }}
+        </template>
+      </el-table-column>
       <el-table-column
         :formatter="dateFormatter"
         align="center"
@@ -103,11 +119,14 @@
 
   <!-- 表单弹窗：添加/修改 -->
   <WhitelistForm ref="formRef" @success="getList" />
+  <!-- 白名单人员导入弹窗 -->
+  <WhitelistImportForm ref="importFormRef" @success="getList" />
 </template>
 <script lang="ts" setup>
 import { dateFormatter } from '@/utils/formatTime'
 import * as WhitelistApi from '@/api/member/whitelist'
 import WhitelistForm from './WhitelistForm.vue'
+import WhitelistImportForm from './WhitelistImportForm.vue'
 
 defineOptions({ name: 'MemberWhitelist' })
 
@@ -125,6 +144,23 @@ const queryParams = reactive({
   createTime: []
 })
 const queryFormRef = ref() // 搜索的表单
+
+/** 生成入学年份选项：从2015年到当前年份 */
+const enrollmentYearOptions = computed(() => {
+  const currentYear = new Date().getFullYear()
+  const years: number[] = []
+  for (let year = 2015; year <= currentYear; year++) {
+    years.push(year)
+  }
+  return years
+})
+
+/** 生成入学期数选项：与入学年份数量保持一致 */
+const semesterOptions = computed(() => {
+  // 入学期数与入学年份数量一致，从1开始
+  const count = enrollmentYearOptions.value.length
+  return Array.from({ length: count }, (_, i) => i + 1)
+})
 
 /** 查询列表 */
 const getList = async () => {
@@ -154,6 +190,12 @@ const resetQuery = () => {
 const formRef = ref()
 const openForm = (type: string, id?: number) => {
   formRef.value.open(type, id)
+}
+
+/** 白名单人员导入 */
+const importFormRef = ref()
+const handleImport = () => {
+  importFormRef.value.open()
 }
 
 /** 删除按钮操作 */

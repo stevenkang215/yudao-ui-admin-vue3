@@ -11,21 +11,29 @@
         <el-input v-model="formData.userName" placeholder="请输入姓名" />
       </el-form-item>
       <el-form-item label="入学年份" prop="enrollmentYear">
-        <el-input-number
+        <el-select
           v-model="formData.enrollmentYear"
-          placeholder="请输入入学年份"
-          :min="2000"
-          :max="2100"
+          placeholder="请选择入学年份"
+          clearable
           style="width: 100%"
-        />
+        >
+          <el-option
+            v-for="year in enrollmentYearOptions"
+            :key="year"
+            :label="year + '年'"
+            :value="year"
+          />
+        </el-select>
       </el-form-item>
-      <el-form-item label="入学学期数" prop="semester">
-        <el-input-number
+      <el-form-item label="入学期数" prop="semester">
+        <el-select
           v-model="formData.semester"
-          placeholder="请输入入学学期数"
-          :min="1"
+          placeholder="请选择入学期数"
+          clearable
           style="width: 100%"
-        />
+        >
+          <el-option v-for="sem in semesterOptions" :key="sem" :label="`第${sem}期`" :value="sem" />
+        </el-select>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -56,6 +64,23 @@ const formRules = reactive({
   semester: [{ required: true, message: '入学学期数不能为空', trigger: 'blur' }]
 })
 const formRef = ref() // 表单 Ref
+
+/** 生成入学年份选项：从2015年到当前年份 */
+const enrollmentYearOptions = computed(() => {
+  const currentYear = new Date().getFullYear()
+  const years: number[] = []
+  for (let year = 2015; year <= currentYear; year++) {
+    years.push(year)
+  }
+  return years
+})
+
+/** 生成入学期数选项：与入学年份数量保持一致 */
+const semesterOptions = computed(() => {
+  // 入学期数与入学年份数量一致，从1开始
+  const count = enrollmentYearOptions.value.length
+  return Array.from({ length: count }, (_, i) => i + 1)
+})
 
 /** 打开弹窗 */
 const open = async (type: string, id?: number) => {

@@ -32,3 +32,8 @@ export const updateWhitelist = async (data: WhitelistVO) => {
 export const deleteWhitelist = async (id: number) => {
   return await request.delete({ url: `/member/user-whitelist/delete?id=` + id })
 }
+
+// 下载白名单人员导入模板
+export const importWhitelistTemplate = () => {
+  return request.download({ url: '/member/user-whitelist/get-import-template' })
+}

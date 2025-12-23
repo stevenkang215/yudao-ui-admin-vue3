@@ -57,18 +57,18 @@
           <el-option
             v-for="year in enrollmentYearOptions"
             :key="year"
-            :label="year"
+            :label="year + '年'"
             :value="year"
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="入学学期" prop="enrollmentSemester">
-        <el-select v-model="formData.enrollmentSemester" placeholder="请选择入学学期" clearable>
+      <el-form-item label="入学期数" prop="enrollmentSemester">
+        <el-select v-model="formData.enrollmentSemester" placeholder="请选择入学期数" clearable>
           <el-option
-            v-for="semester in enrollmentSemesterOptions"
-            :key="semester.id"
-            :label="semester.label"
-            :value="semester.id"
+            v-for="sem in enrollmentSemesterOptions"
+            :key="sem"
+            :label="`第${sem}期`"
+            :value="sem"
           />
         </el-select>
       </el-form-item>
@@ -139,7 +139,6 @@
 <script setup lang="ts">
 import { DICT_TYPE, getIntDictOptions } from '@/utils/dict'
 import * as UserApi from '@/api/member/user'
-import dayjs from 'dayjs'
 // import * as AreaApi from '@/api/system/area'
 // import { defaultProps } from '@/utils/tree'
 // import MemberTagSelect from '@/views/member/tag/components/MemberTagSelect.vue'
@@ -190,28 +189,21 @@ const formRules = reactive({
 const formRef = ref() // 表单 Ref
 // const areaList = ref([]) // 地区列表
 
-// 生成入学年份选项（从1970年到当前年份）
+/** 生成入学年份选项：从2015年到当前年份 */
 const enrollmentYearOptions = computed(() => {
-  const currentYear = dayjs().year()
+  const currentYear = new Date().getFullYear()
   const years: number[] = []
-  for (let year = 1970; year <= currentYear; year++) {
+  for (let year = 2015; year <= currentYear; year++) {
     years.push(year)
   }
-  return years.reverse() // 倒序排列，最新年份在前
+  return years
 })
 
-// 生成入学学期选项
+/** 生成入学期数选项：与入学年份数量保持一致 */
 const enrollmentSemesterOptions = computed(() => {
-  const currentYear = dayjs().year()
-  const baseSemesters = 2 // 内置2个学期
-  const startYear = 2000 // 从2000年开始每年增加一学期
-  const additionalSemesters = currentYear >= startYear ? currentYear - startYear + 1 : 0
-  const totalSemesters = baseSemesters + additionalSemesters
-  const semesters = Array.from({ length: totalSemesters }, (_, i) => ({
-    id: i + 1,
-    label: `第${i + 1}学期`
-  }))
-  return semesters
+  // 入学期数与入学年份数量一致，从1开始
+  const count = enrollmentYearOptions.value.length
+  return Array.from({ length: count }, (_, i) => i + 1)
 })
 
 /** 打开弹窗 */

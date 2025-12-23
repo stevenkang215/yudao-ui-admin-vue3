@@ -73,13 +73,13 @@
             <template #label>
               <descriptions-item-label icon="ep:calendar" label="入学年份" />
             </template>
-            {{ user.enrollmentYear || '空' }}
+            {{ user.enrollmentYear ? `${user.enrollmentYear}年` : '空' }}
           </el-descriptions-item>
           <el-descriptions-item>
             <template #label>
-              <descriptions-item-label icon="ep:reading" label="入学学期" />
+              <descriptions-item-label icon="ep:reading" label="入学期数" />
             </template>
-            {{ user.enrollmentSemester ? `第${user.enrollmentSemester}学期` : '空' }}
+            {{ user.enrollmentSemester ? `${user.enrollmentSemester}期` : '空' }}
           </el-descriptions-item>
           <el-descriptions-item>
             <template #label>
@@ -233,7 +233,7 @@
         </el-descriptions-item>
         <el-descriptions-item>
           <template #label>
-            <descriptions-item-label icon="ep:reading" label="入学学期" />
+            <descriptions-item-label icon="ep:reading" label="入学期数" />
           </template>
           {{ user.enrollmentSemester ? `第${user.enrollmentSemester}学期` : '空' }}
         </el-descriptions-item>
