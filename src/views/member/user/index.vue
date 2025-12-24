@@ -107,6 +107,7 @@
           {{ scope.row.enrollmentSemester ? scope.row.enrollmentSemester + '期' : '' }}
         </template>
       </el-table-column>
+      <el-table-column align="center" label="学院" prop="college" min-width="220px" />
       <el-table-column align="center" label="行业" prop="industry" min-width="120px" />
       <el-table-column align="center" label="在职公司" prop="company" min-width="120px" />
       <el-table-column align="center" label="职位" prop="position" min-width="120px" />

@@ -72,6 +72,16 @@
           />
         </el-select>
       </el-form-item>
+      <el-form-item label="学院" prop="college">
+        <el-select v-model="formData.college" placeholder="请选择学院" clearable>
+          <el-option
+            v-for="college in collegeOptions"
+            :key="college"
+            :label="college"
+            :value="college"
+          />
+        </el-select>
+      </el-form-item>
       <el-form-item label="所属行业" prop="industry">
         <el-input v-model="formData.industry" placeholder="请输入所属行业" />
       </el-form-item>
@@ -168,6 +178,7 @@ const formData = ref({
   email: undefined,
   enrollmentYear: undefined,
   enrollmentSemester: undefined,
+  college: undefined,
   industry: undefined,
   company: undefined,
   position: undefined,
@@ -206,6 +217,10 @@ const enrollmentSemesterOptions = computed(() => {
   return Array.from({ length: count }, (_, i) => i + 1)
 })
 
+/** 生成学院选项 */
+const collegeOptions = computed(() => {
+  return ['清华大学五道口金融学院', '康奈尔大学约翰逊管理学院']
+})
 /** 打开弹窗 */
 const open = async (type: string, id?: number) => {
   dialogVisible.value = true

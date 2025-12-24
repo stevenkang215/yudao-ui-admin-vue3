@@ -83,6 +83,12 @@
           </el-descriptions-item>
           <el-descriptions-item>
             <template #label>
+              <descriptions-item-label icon="ep:reading" label="学院" />
+            </template>
+            {{ user.college || '空' }}
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template #label>
               <descriptions-item-label icon="ep:briefcase" label="所属行业" />
             </template>
             {{ user.industry || '空' }}
@@ -235,7 +241,13 @@
           <template #label>
             <descriptions-item-label icon="ep:reading" label="入学期数" />
           </template>
-          {{ user.enrollmentSemester ? `第${user.enrollmentSemester}学期` : '空' }}
+          {{ user.enrollmentSemester ? `${user.enrollmentSemester}期` : '空' }}
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template #label>
+            <descriptions-item-label icon="ep:reading" label="学院" />
+          </template>
+          {{ user.college || '空' }}
         </el-descriptions-item>
         <el-descriptions-item>
           <template #label>

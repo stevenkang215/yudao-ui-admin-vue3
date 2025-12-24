@@ -23,6 +23,7 @@ export interface UserVO {
   email: string | undefined
   enrollmentYear: number | undefined
   enrollmentSemester: number | undefined
+  college: string | undefined
   industry: string | undefined
   company: string | undefined
   position: string | undefined
